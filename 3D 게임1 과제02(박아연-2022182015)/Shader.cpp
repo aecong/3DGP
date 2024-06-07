@@ -285,6 +285,8 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	CSphereMeshDiffused* pSphereMesh = new CSphereMeshDiffused(pd3dDevice,
 		pd3dCommandList, 6.0f, 20, 20);
 
+	// 메쉬 생성하는 곳
+
 	int xObjects = 10, yObjects = 10, zObjects = 10, i = 0;
 	//x-축, y-축, z-축으로 21개씩 총 21 x 21 x 21 = 9261개의 정육면체를 생성하고 배치한다. 
 	m_nObjects = (xObjects * 2 + 1) * (yObjects * 2 + 1) * (zObjects * 2 + 1);
