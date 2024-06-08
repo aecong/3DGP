@@ -279,42 +279,86 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	//가로x세로x높이가 12x12x12인 정육면체 메쉬를 생성한다.
 	CCubeMeshDiffused* pCubeMesh = new CCubeMeshDiffused(pd3dDevice, pd3dCommandList,
 		12.0f, 12.0f, 12.0f);
-	/*x-축, y-축, z-축 양의 방향의 객체 개수이다. 각 값을 1씩 늘리거나 줄이면서 실행할 때 프레임 레이트가 어떻게
-   변하는 가를 살펴보기 바란다.*/
-   //구 메쉬를 생성한다.
-	CSphereMeshDiffused* pSphereMesh = new CSphereMeshDiffused(pd3dDevice,
-		pd3dCommandList, 6.0f, 20, 20);
 
-	// 메쉬 생성하는 곳
-
-	int xObjects = 10, yObjects = 10, zObjects = 10, i = 0;
-	//x-축, y-축, z-축으로 21개씩 총 21 x 21 x 21 = 9261개의 정육면체를 생성하고 배치한다. 
-	m_nObjects = (xObjects * 2 + 1) * (yObjects * 2 + 1) * (zObjects * 2 + 1);
-
+	m_nObjects = 10;
 	m_ppObjects = new CGameObject * [m_nObjects];
 
-	float fxPitch = 12.0f * 2.5f;
-	float fyPitch = 12.0f * 2.5f;
-	float fzPitch = 12.0f * 2.5f;
-
 	CRotatingObject* pRotatingObject = NULL;
-	for (int x = -xObjects; x <= xObjects; x++)
 	{
-		for (int y = -yObjects; y <= yObjects; y++)
-		{
-			for (int z = -zObjects; z <= zObjects; z++)
-			{
-				pRotatingObject = new CRotatingObject();
-				// 직육면체와 구 메쉬를 교대로 배치한다.
-				pRotatingObject->SetMesh((i % 2) ? (CMesh*)pCubeMesh : (CMesh*)pSphereMesh);
-				//각 정육면체 객체의 위치를 설정한다.
-				pRotatingObject->SetPosition(fxPitch * x, fyPitch * y, fzPitch * z);
-				pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
-				pRotatingObject->SetRotationSpeed(10.0f * (i % 10));
-				m_ppObjects[i++] = pRotatingObject;
-			}
-		}
+		CRotatingObject* pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(-13.5f, 0.0f, -14.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
+		pRotatingObject->SetRotationSpeed(90.0f);
+		/*pRotatingObject->SetMovingDirection(XMFLOAT3(1.0f, 0.0f, 0.0f));
+		pRotatingObject->SetMovingSpeed(20.5f);*/
+		m_ppObjects[0] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(+13.5f, 0.0f, -14.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(180.0f);
+		m_ppObjects[1] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(0.0f, +5.0f, 20.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(30.15f);
+
+		m_ppObjects[2] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(0.0f, 0.0f, 0.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 1.0f));
+		pRotatingObject->SetRotationSpeed(40.6f);
+		m_ppObjects[3] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(10.0f, 0.0f, 0.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(50.06f);
+		m_ppObjects[4] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(-10.0f, 0.0f, -10.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(60.06f);
+		m_ppObjects[5] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(-10.0f, 10.0f, -10.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(60.06f);
+		m_ppObjects[6] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(-10.0f, 10.0f, -20.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(0.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(70.06f);
+		m_ppObjects[7] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(-15.0f, 10.0f, -30.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(90.06f);
+		m_ppObjects[8] = pRotatingObject;
+
+		pRotatingObject = new CRotatingObject();
+		pRotatingObject->SetMesh((CMesh*)pCubeMesh);
+		pRotatingObject->SetPosition(+15.0f, 10.0f, 0.0f);
+		pRotatingObject->SetRotationAxis(XMFLOAT3(1.0f, 1.0f, 0.0f));
+		pRotatingObject->SetRotationSpeed(90.06f);
+		m_ppObjects[9] = pRotatingObject;
 	}
+
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
 void CObjectsShader::ReleaseObjects()
