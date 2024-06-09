@@ -39,6 +39,10 @@ void CGameObject::ReleaseUploadBuffers()
 }
 void CGameObject::Animate(float fTimeElapsed)
 {
+	if (m_fMovingSpeed != 0.0f) Move(m_xmf3MovingDirection, m_fMovingSpeed * fTimeElapsed);
+
+	// UpdateBoundingBox();	
+
 }
 void CGameObject::OnPrepareRender()
 {
@@ -100,6 +104,11 @@ XMFLOAT3 CGameObject::GetRight()
 	XMFLOAT3 temp(m_xmf4x4World._11, m_xmf4x4World._12, m_xmf4x4World._13);
 	return(Vector3::Normalize(temp));
 }
+void CGameObject::Move(XMFLOAT3& vDirection, float fSpeed)
+{
+	SetPosition(m_xmf4x4World._41 + vDirection.x * fSpeed, m_xmf4x4World._42 + vDirection.y * fSpeed, m_xmf4x4World._43 + vDirection.z * fSpeed);
+}
+
 //게임 객체를 로컬 x-축 방향으로 이동한다.
 void CGameObject::MoveStrafe(float fDistance)
 {
@@ -179,8 +188,8 @@ int CGameObject::PickObjectByRayIntersection(XMFLOAT3& xmf3PickPosition, XMFLOAT
 
 CRotatingObject::CRotatingObject()
 {
-	m_xmf3RotationAxis = XMFLOAT3(0.0f, 1.0f, 0.0f);
-	m_fRotationSpeed = 90.0f;
+	//m_xmf3RotationAxis = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	//m_fRotationSpeed = 90.0f;
 }
 CRotatingObject::~CRotatingObject()
 {
@@ -188,5 +197,7 @@ CRotatingObject::~CRotatingObject()
 
 void CRotatingObject::Animate(float fTimeElapsed)
 {
-	CGameObject::Rotate(&m_xmf3RotationAxis, m_fRotationSpeed * fTimeElapsed);
+	if (m_fRotationSpeed != 0.0f) Rotate(&m_xmf3RotationAxis, m_fRotationSpeed * fTimeElapsed);
+
+	CGameObject::Animate(fTimeElapsed);
 }

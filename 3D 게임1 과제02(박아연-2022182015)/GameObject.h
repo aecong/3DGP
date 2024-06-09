@@ -16,6 +16,11 @@ public:
 	void Release() { if (--m_nReferences <= 0) delete this; }
 	void Rotate(XMFLOAT3* pxmf3Axis, float fAngle);
 
+	XMFLOAT3					m_xmf3MovingDirection = XMFLOAT3(0.0f, 0.0f, 1.0f);
+	float						m_fMovingSpeed = 0.0f;
+
+	BoundingOrientedBox			m_xmOOBB = BoundingOrientedBox();	// 월드 좌표계로 표현
+
 protected:
 	XMFLOAT4X4 m_xmf4x4World;
 	CMesh* m_pMesh = NULL;
@@ -46,11 +51,16 @@ public:
 	void SetPosition(float x, float y, float z);
 	void SetPosition(XMFLOAT3 xmf3Position);
 
+	void SetMovingDirection(XMFLOAT3& xmf3MovingDirection) { m_xmf3MovingDirection = Vector3::Normalize(xmf3MovingDirection); }
+	void SetMovingSpeed(float fSpeed) { m_fMovingSpeed = fSpeed; }
+
+	void Move(XMFLOAT3& vDirection, float fSpeed);
+
 	//게임 객체를 로컬 x-축, y-축, z-축 방향으로 이동한다.
 	void MoveStrafe(float fDistance = 1.0f);
 	void MoveUp(float fDistance = 1.0f);
 	void MoveForward(float fDistance = 1.0f);
-
+	
 	//게임 객체를 회전(x-축, y-축, z-축)한다.
 	void Rotate(float fPitch = 10.0f, float fYaw = 10.0f, float fRoll = 10.0f);
 
